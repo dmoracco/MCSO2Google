@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCSO2Google", "MCSO2Google\MCSO2Google.csproj", "{0AA7A998-C565-46A9-AE3B-9B4DCA898AA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AA7A998-C565-46A9-AE3B-9B4DCA898AA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA7A998-C565-46A9-AE3B-9B4DCA898AA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA7A998-C565-46A9-AE3B-9B4DCA898AA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA7A998-C565-46A9-AE3B-9B4DCA898AA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27EA036A-E192-4DFB-8F5F-4DB9B6838D08}
+	EndGlobalSection
+EndGlobal
