@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Scheduler;
 
 namespace MCSO2Google
 {
@@ -18,6 +19,31 @@ namespace MCSO2Google
         }
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+
+        }
+
+        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnParse_Click(object sender, EventArgs e)
+        {
+            string path = "";
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                path = ofd.FileName;               
+            }
+            Schedule test = new Schedule(path);
+            foreach (Employee dude in test._employees)
+            {
+                listBox1.Items.Add(dude.Name);
+            }  
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

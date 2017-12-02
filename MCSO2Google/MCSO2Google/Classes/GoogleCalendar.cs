@@ -6,6 +6,6 @@ namespace Scheduler
 {
 	public class GoogleCalendar
 	{
-		private Token _login;
+		private string _login;
 	}
 }
