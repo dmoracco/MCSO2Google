@@ -17,6 +17,7 @@ namespace Scheduler
         public WorkWeek(WorkDay initialday)
         {
             _workDays = new List<WorkDay>();
+
             if ((int)initialday.Date.DayOfWeek == 0)
                 WeekStart = initialday.Date;
             else

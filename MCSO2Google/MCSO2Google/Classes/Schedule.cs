@@ -20,7 +20,7 @@ namespace Scheduler
 
             while (test == false)
             {
-                
+
                 string[] segments = currentline.Split(',');
                 for (int i = 0; i < segments.Length; i++)
                     segments[i] = segments[i].Replace('"', ' ').Trim();
@@ -43,12 +43,15 @@ namespace Scheduler
 
                 Shift shiftbuffer = new Shift(startbuffer, endbuffer, letterbuffer[0]);
 
+                Console.WriteLine("PartOfWeek: {0}", shiftbuffer.PartOfWeek());
+                
                 //validate unique Shift before adding it to WD, WW. IEquitable?
 
                 //try catch here?
-                if (_workWeeks.Exists(x => x.WeekStart == shiftbuffer.ShiftDate))
+                if (_workWeeks.Exists(x => x.WeekStart == shiftbuffer.PartOfWeek()))
                 {
-                    _workWeeks.Find(x => x.WeekStart == shiftbuffer.ShiftDate).AddShift(shiftbuffer);
+                    Console.WriteLine("Adding to existing week: {0}", _workWeeks.Find(x => x.WeekStart == shiftbuffer.PartOfWeek()).WeekStart);
+                    _workWeeks.Find(x => x.WeekStart == shiftbuffer.PartOfWeek()).AddShift(shiftbuffer);
                 }
                 else
                 {

@@ -24,13 +24,13 @@ namespace Scheduler
 
         public DateTime PartOfWeek()
         {
-            if ((int)_start.DayOfWeek == 0)
-                return _start;
+            if ((int)this._start.DayOfWeek == 0)
+                return _start.Date;
             else
             {
-                int days = (int)_start.DayOfWeek;
-                DateTime startofweek = _start.AddDays(-days);
-                return startofweek;
+                int days = (int)this._start.DayOfWeek;
+                DateTime startofweek = this._start.AddDays(-days);
+                return startofweek.Date;
             }
         }
 	}
