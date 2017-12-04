@@ -18,7 +18,7 @@ namespace Scheduler
         public CSVFile(string path)
         {
             _currentline = 1;
-            //add handling for when bad file is passed...
+            //add handling for when bad file is passed or didnt open...
             string line;
             _linelist = new List<string>();
 

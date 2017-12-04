@@ -1,3 +1,4 @@
+using Google.Apis.Calendar.v3.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,16 +11,18 @@ namespace Scheduler
         private DateTime _start;
         private DateTime _end;
         private bool _partialShift;
+        internal Employee _employee;
         public DateTime StartDateTime { get { return _start; } }
         public DateTime EndDateTime { get { return _end; } }
         public DateTime ShiftDate { get {return _start.Date;} }
-        public Shift(DateTime start, DateTime end, char shiftID)
+        public Shift(DateTime start, DateTime end, char shiftID, Employee employee)
         {
             //validate these DateTime inputs
             _start = start;
             _end = end;
             _designation = shiftID;
             _partialShift = false;
+            _employee = employee;
         }
 
         public DateTime PartOfWeek()
@@ -32,6 +35,27 @@ namespace Scheduler
                 DateTime startofweek = this._start.AddDays(-days);
                 return startofweek.Date;
             }
+        }
+        public Event CreateCalendarEvent()
+        {
+            Event newshift = new Event()
+            {
+                Summary = _designation + " Shift",
+                Location = "502 9th Ave SE, Bismarck, ND 58503",
+                Start = new EventDateTime()
+                {
+                    DateTime = _start,
+                    TimeZone = "America/Chicago",
+
+                },
+                End = new EventDateTime()
+                {
+                    DateTime = _end,
+                    TimeZone = "America/Chicago",
+                }
+            };
+            return newshift;
+
         }
 	}
 }

@@ -7,7 +7,7 @@ namespace Scheduler
 	public class WorkDay
 	{
 		private DateTime _date;
-        private List<Shift> _shifts;
+        internal List<Shift> _shifts;
         private bool _coverage;
         public DateTime Date { get { return _date; } }
         public WorkDay(Shift initialshift)

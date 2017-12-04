@@ -36,10 +36,16 @@ namespace MCSO2Google
             {
                 path = ofd.FileName;               
             }
+
             Schedule test = new Schedule(path);
-            foreach (Employee dude in test._employees)
+            test.ConnectGoogle();
+            test.UploadCalendar();
+
+            List<string> events = test._cloudCalendar.ListEvents("primary");
+
+            foreach (string eventitem in events)
             {
-                listBox1.Items.Add(dude.Name);
+                listBox1.Items.Add(eventitem);
             }  
         }
 

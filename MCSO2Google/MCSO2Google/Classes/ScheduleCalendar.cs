@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Scheduler
 {
-	public abstract class Calendar
+	public abstract class ScheduleCalendar
 	{
 		protected DateTime StartDate;
 		protected DateTime EndDate;
-		protected GoogleCalendar _cloudCalendar;
+		public GoogleCalendarAPI _cloudCalendar;
 	}
 }

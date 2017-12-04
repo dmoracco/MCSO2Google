@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Scheduler
 {
-	public class WorkWeek : Calendar
+	public class WorkWeek : ScheduleCalendar
 	{
 		
-        private List<WorkDay> _workDays;
+        internal List<WorkDay> _workDays;
         public DateTime WeekStart { get; }
 
         public WorkWeek(Shift initialshift):this(new WorkDay(initialshift))
