@@ -14,6 +14,7 @@ namespace MCSO2Google
     public partial class Form1 : Form
     {
         private Schedule _schedule;
+
         public Form1()
         {
             InitializeComponent();

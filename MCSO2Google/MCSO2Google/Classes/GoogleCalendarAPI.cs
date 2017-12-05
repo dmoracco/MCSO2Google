@@ -21,23 +21,24 @@ namespace Scheduler
         private static string[] Scopes = { CalendarService.Scope.Calendar};
         private static string ApplicationName = "MCSO Schedule Assistant";
         private CalendarService _service;
+        private string _credPath;
 
         public GoogleCalendarAPI()
         {
             using (var stream =
                new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
             {
-                string credPath = System.Environment.GetFolderPath(
+                _credPath = System.Environment.GetFolderPath(
                     System.Environment.SpecialFolder.Personal);
-                credPath = Path.Combine(credPath, ".credentials/calendar-dotnet-quickstart.json");
+                _credPath = Path.Combine(_credPath, ".credentials/calendar-dotnet-quickstart.json");
 
                 _credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
+                    new FileDataStore(_credPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " + _credPath);
             }
 
             // Create Google Calendar API service.
@@ -98,6 +99,11 @@ namespace Scheduler
             var primeCalendar = _service.Calendars.Get("primary").Execute();
             string email = primeCalendar.Id;
             return email;
+        }
+
+        public void ClearAccount()
+        {
+            File.Delete(_credPath);
         }
 
 	}
