@@ -15,6 +15,8 @@ namespace Scheduler
         public DateTime StartDateTime { get { return _start; } }
         public DateTime EndDateTime { get { return _end; } }
         public DateTime ShiftDate { get {return _start.Date;} }
+        public string ShiftDesignation { get { return _designation.ToString(); } }
+
         public Shift(DateTime start, DateTime end, char shiftID, Employee employee)
         {
             //validate these DateTime inputs

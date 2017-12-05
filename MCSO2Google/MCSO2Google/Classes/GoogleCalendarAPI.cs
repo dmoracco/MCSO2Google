@@ -1,4 +1,5 @@
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Oauth2.v2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
@@ -17,8 +18,8 @@ namespace Scheduler
 	{
         private UserCredential _credential;
         private CalendarList _calendarList;
-        private static string[] Scopes = { CalendarService.Scope.Calendar };
-        private static string ApplicationName = "Google Calendar API .NET";
+        private static string[] Scopes = { CalendarService.Scope.Calendar};
+        private static string ApplicationName = "MCSO Schedule Assistant";
         private CalendarService _service;
 
         public GoogleCalendarAPI()
@@ -89,6 +90,14 @@ namespace Scheduler
         {
             EventsResource.InsertRequest request = _service.Events.Insert(newevent, calendarID);
             Event createdEvent = request.Execute();
+        }
+
+        public string GetAccountEmail()
+        {
+
+            var primeCalendar = _service.Calendars.Get("primary").Execute();
+            string email = primeCalendar.Id;
+            return email;
         }
 
 	}
