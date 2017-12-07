@@ -45,18 +45,12 @@ namespace Scheduler
                 char[] letterbuffer = segments[6].ToCharArray();
 
                 Shift shiftbuffer = new Shift(startbuffer, endbuffer, letterbuffer[0], employeebuffer);
-                
+
                 //validate unique Shift before adding it to WD, WW. IEquitable?
 
                 //try catch here?
-                if (_workWeeks.Exists(x => x.WeekStart == shiftbuffer.PartOfWeek()))
-                {
-                    _workWeeks.Find(x => x.WeekStart == shiftbuffer.PartOfWeek()).AddShift(shiftbuffer);
-                }
-                else
-                {
-                    _workWeeks.Add(new WorkWeek(shiftbuffer));
-                }
+                this.AddShift(shiftbuffer);
+
                 currentline = csv.GetNextLine();
                 if (currentline == null)
                     test = true;
@@ -64,12 +58,25 @@ namespace Scheduler
             }
             
 		}
+        public void AddShift(Shift shiftbuffer)
+        {
+            if (_workWeeks.Exists(x => x.WeekStart == shiftbuffer.PartOfWeek()))
+            {
+                _workWeeks.Find(x => x.WeekStart == shiftbuffer.PartOfWeek()).AddShift(shiftbuffer);
+            }
+            else
+            {
+                _workWeeks.Add(new WorkWeek(shiftbuffer));
+            }
+        }
+
         public void ConnectGoogle()
         {
             _cloudCalendar = new GoogleCalendarAPI();
         }
         public void UploadCalendar()
         {
+
             foreach (WorkWeek week in _workWeeks)
             {
                 foreach (WorkDay day in week._workDays)
@@ -79,15 +86,25 @@ namespace Scheduler
                         Event shiftevent = shift.CreateCalendarEvent();
                         if (shift._employee._subCalendarID == "")
                         {
-                            Console.WriteLine("Adding new sub calendar");
-                            string summarybuffer = shift._employee.Name + " " + shift._employee.EmployeeID;
-                            string newID = _cloudCalendar.AddCalendar(summarybuffer, "America/Chicago");
-                            shift._employee._subCalendarID = newID;                            
+                            string newsummary = shift._employee.Name; /*+ " " + shift._employee.EmployeeID;*/
+                            string newID = _cloudCalendar.FindCalendarID(newsummary);
+                            if (newID == "")
+                            {
+                                Console.WriteLine("Adding new sub calendar");
+                                newID = _cloudCalendar.AddCalendar(newsummary, "America/Chicago");
+                                shift._employee._subCalendarID = newID;
+                            } 
+                            else
+                            {
+                                shift._employee._subCalendarID = newID;
+                            }
                         }
-
                         string subcalID = shift._employee._subCalendarID;
-
-                        _cloudCalendar.AddEvent(shiftevent, subcalID);
+                        if (!_cloudCalendar.EventExist(shiftevent, subcalID))
+                        {                           
+                            _cloudCalendar.AddEvent(shiftevent, subcalID);
+                        }
+                        
                     }
                 }
             }

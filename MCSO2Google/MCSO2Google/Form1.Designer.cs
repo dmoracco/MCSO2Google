@@ -38,6 +38,13 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
+            this.btnUpload = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusUpload = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOpenCSV
@@ -73,6 +80,7 @@
             this.textBoxGoogleAcct.Enabled = false;
             this.textBoxGoogleAcct.Location = new System.Drawing.Point(95, 47);
             this.textBoxGoogleAcct.Name = "textBoxGoogleAcct";
+            this.textBoxGoogleAcct.ReadOnly = true;
             this.textBoxGoogleAcct.Size = new System.Drawing.Size(275, 20);
             this.textBoxGoogleAcct.TabIndex = 4;
             // 
@@ -118,18 +126,84 @@
             this.columnHeader5.Text = "End Time";
             this.columnHeader5.Width = 150;
             // 
+            // btnAdd
+            // 
+            this.btnAdd.Enabled = false;
+            this.btnAdd.Location = new System.Drawing.Point(597, 88);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(76, 23);
+            this.btnAdd.TabIndex = 6;
+            this.btnAdd.Text = "Add...";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Enabled = false;
+            this.btnEdit.Location = new System.Drawing.Point(597, 117);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(76, 23);
+            this.btnEdit.TabIndex = 7;
+            this.btnEdit.Text = "Edit...";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Enabled = false;
+            this.btnRemove.Location = new System.Drawing.Point(597, 146);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(76, 25);
+            this.btnRemove.TabIndex = 8;
+            this.btnRemove.Text = "Remove...";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            // 
+            // btnUpload
+            // 
+            this.btnUpload.Enabled = false;
+            this.btnUpload.Location = new System.Drawing.Point(15, 364);
+            this.btnUpload.Name = "btnUpload";
+            this.btnUpload.Size = new System.Drawing.Size(89, 27);
+            this.btnUpload.TabIndex = 9;
+            this.btnUpload.Text = "Upload";
+            this.btnUpload.UseVisualStyleBackColor = true;
+            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusUpload});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 411);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(692, 22);
+            this.statusStrip1.TabIndex = 10;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusUpload
+            // 
+            this.toolStripStatusUpload.Name = "toolStripStatusUpload";
+            this.toolStripStatusUpload.Size = new System.Drawing.Size(35, 17);
+            this.toolStripStatusUpload.Text = "Idle...";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 433);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.btnUpload);
+            this.Controls.Add(this.btnRemove);
+            this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.listViewShifts);
             this.Controls.Add(this.textBoxGoogleAcct);
             this.Controls.Add(this.textBoxCSVPath);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnOpenCSV);
+            this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "MSCO Schedule Assistant";
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,6 +221,12 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.Button btnUpload;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusUpload;
     }
 }
 

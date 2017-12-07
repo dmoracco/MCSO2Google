@@ -30,7 +30,7 @@ namespace Scheduler
             {
                 _credPath = System.Environment.GetFolderPath(
                     System.Environment.SpecialFolder.Personal);
-                _credPath = Path.Combine(_credPath, ".credentials/calendar-dotnet-quickstart.json");
+                _credPath = Path.Combine(_credPath, ".MCSOcredentials/calendar-dotnet-quickstart.json");
 
                 _credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
@@ -48,18 +48,55 @@ namespace Scheduler
                 ApplicationName = ApplicationName,
             });
         }
+        public string FindCalendarID(string name)
+        {
+            CalendarList calendarList = _service.CalendarList.List().Execute();
+            foreach (CalendarListEntry entry in calendarList.Items)
+            {
+                string summary = entry.Summary;
+                if (summary == name)
+                {
+                    return entry.Id;
+                }
+            }
+
+            return "";
+        }
+
+        public bool EventExist(Event shift, string calendarID)
+        {
+            EventsResource.ListRequest request = _service.Events.List(calendarID);
+            request.TimeMin = shift.Start.DateTime;
+            request.TimeMax = shift.End.DateTime;
+            request.ShowDeleted = false;
+            request.SingleEvents = true;
+            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+            Events events = request.Execute();
+            if (events.Items != null && events.Items.Count > 0)
+            {
+                foreach (var eventItem in events.Items)
+                {
+                    if (eventItem.Summary == shift.Summary)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
         public List<string> ListEvents(string calendarID)
         {
             List<string> eventslist = new List<String>();
 
             EventsResource.ListRequest request = _service.Events.List(calendarID);
-            request.TimeMin = DateTime.Now;
             request.ShowDeleted = false;
             request.SingleEvents = true;
-            request.MaxResults = 10;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
             Events events = request.Execute();
+            Console.WriteLine(events.Items.Count);
             if (events.Items != null && events.Items.Count > 0)
             {
                 foreach (var eventItem in events.Items)
@@ -103,7 +140,15 @@ namespace Scheduler
 
         public void ClearAccount()
         {
-            File.Delete(_credPath);
+            if (Directory.Exists(_credPath))
+            {
+                foreach (var file in Directory.GetFiles(_credPath))
+                {
+                    File.Delete(file);
+                }
+                Directory.Delete(_credPath);
+            }
+            
         }
 
 	}

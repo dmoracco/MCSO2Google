@@ -42,8 +42,9 @@ namespace Scheduler
         {
             Event newshift = new Event()
             {
+                //Id = _employee.EmployeeID + _start.ToString() + _end.ToString(),
                 Summary = _designation + " Shift",
-                Location = "502 9th Ave SE, Bismarck, ND 58503",
+                Location = "1234 5th Ave SE, Bismarck, ND 58503",
                 Start = new EventDateTime()
                 {
                     DateTime = _start,
@@ -55,6 +56,7 @@ namespace Scheduler
                     DateTime = _end,
                     TimeZone = "America/Chicago",
                 }
+                
             };
             return newshift;
 
