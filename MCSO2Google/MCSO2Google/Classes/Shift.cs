@@ -54,16 +54,16 @@ namespace MCSO.Scheduling.ScheduleBase.Data
             }
         }
  
-        public Shift(DateTime start, DateTime end, string shiftID, Employee employee)
+        public Shift(Employee employee, DateTime starttime, DateTime endtime, string shiftdesignation)
         {
             try
             {
 
                 // Set and validate Start and End Date/Times
-                StartDateTime = start;
-                if (DateTime.Compare(end, start) > 0)
+                StartDateTime = starttime;
+                if (DateTime.Compare(endtime, starttime) > 0)
                 {
-                    EndDateTime = end;
+                    EndDateTime = endtime;
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace MCSO.Scheduling.ScheduleBase.Data
                 }
 
                 // Assign Employee and other variables
-                ShiftDesignation = shiftID;
+                ShiftDesignation = shiftdesignation;
                 Employee = employee;
             }
             catch

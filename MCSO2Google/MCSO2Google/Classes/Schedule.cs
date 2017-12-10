@@ -1,4 +1,5 @@
 using Google.Apis.Calendar.v3.Data;
+using MCSO.Scheduling.ScheduleBase.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,27 +20,53 @@ namespace MCSO.Scheduling.ScheduleBase
         /// </summary>
         public List<WorkWeek> WorkWeekList { get; }
 
-        public Schedule(string path)
+        public Schedule()
 		{
             EmployeeList = new List<Employee>();
-            WorkWeekList = new List<WorkWeek>();            
+            WorkWeekList = new List<WorkWeek>(); 
+            //INIT GOOGLECALANDER HERE
 		}
         /// <summary>
         /// Adds shifts and automatically organizes into a WorkDay and WorkWeek.
         /// </summary>
-        /// <param name="shiftbuffer"></param>
-        public override void AddShift(int employeenumber, DateTime starttime, DateTime endtime, string shiftdesignation)
+        /// <param name="employee"></param>
+        /// <param name="starttime"></param>
+        /// <param name="endtime"></param>
+        /// <param name="shiftdesignation"></param>
+       
+        public override void AddShift(Shift newshift)
         {
-            if (_workWeeks.Exists(x => x.WeekStart == shiftbuffer.PartOfWeek()))
+            //CAN I ABSTRACT THIS AND WORKWEEK???
+
+            // Check if relevant WorkWeek already exists.
+            if (WorkWeekList.Exists(x => x.StartDate == newshift.PartOfWeek))
             {
-                _workWeeks.Find(x => x.WeekStart == shiftbuffer.PartOfWeek()).AddShift(shiftbuffer);
+                WorkWeekList.Find(x => x.StartDate == newshift.PartOfWeek).AddShift(newshift);
+                if (DateTime.Compare(newshift.Date, StartDate) < 0) //Duplecate code here....... wat do?
+                {
+                    StartDate = newshift.Date;
+                }
+                if (DateTime.Compare(newshift.EndDateTime.Date, EndDate) > 0)
+                {
+                    EndDate = newshift.EndDateTime.Date;
+                }
             }
+            // Else, create new WorkWeek.
             else
             {
-                _workWeeks.Add(new WorkWeek(shiftbuffer));
+                WorkWeekList.Add(new WorkWeek(newshift));
+                
+                // Update Schedule's DateTimes
+                if (DateTime.Compare(newshift.Date, StartDate) < 0)
+                {
+                    StartDate = newshift.Date;
+                }
+                if (DateTime.Compare(newshift.EndDateTime.Date, EndDate) > 0)
+                {
+                    EndDate = newshift.EndDateTime.Date;
+                }
             }
         }
-
 
         public void UploadCalendar()
         {

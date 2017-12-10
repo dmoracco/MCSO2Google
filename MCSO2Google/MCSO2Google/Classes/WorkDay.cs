@@ -1,53 +1,61 @@
+using MCSO.Scheduling.ScheduleBase.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Scheduler
+namespace MCSO.Scheduling.ScheduleBase
 {
-	public class WorkDay
+    /// <summary>
+    /// Represents a collection of Shifts in a work day.
+    /// </summary>
+    public class WorkDay: CalendarBaseScheduleItem
 	{
-		private DateTime _date;
-        internal List<Shift> _shifts;
-        private bool _coverage;
-        public DateTime Date { get { return _date; } }
+        /// <summary>
+        /// Date of the work day.
+        /// </summary>
+        public DateTime Date { get; }
+        /// <summary>
+        /// Collection of shifts for this work day.
+        /// </summary>
+        public List<Shift> ShiftList { get; }
+        /// <summary>
+        /// Returns the Date of the begining of the week this work day is in. (Sunday)
+        /// </summary>
+        public DateTime PartOfWeek { get; }
         public WorkDay(Shift initialshift)
         {
-            _shifts = new List<Shift>();
-            _shifts.Add(initialshift);
-            _date = initialshift.ShiftDate;
-            _coverage = ValidateCoverage();
+            ShiftList = new List<Shift>();
+            AddShift(initialshift);
+            Date = initialshift.Date;
+            PartOfWeek = initialshift.PartOfWeek;
         }
-        public void AddShift(Shift inputshift)
-        {
-            _shifts.Add(inputshift);
-            _coverage = ValidateCoverage();
-        }
-        public bool ValidateCoverage()
-		{
-            TimeSpan earliest = _shifts[0].StartDateTime.TimeOfDay;
-            TimeSpan latest = _shifts[0].EndDateTime.TimeOfDay;
-            TimeSpan EOD = new TimeSpan(23, 59, 59);
-            TimeSpan BOD = new TimeSpan(00, 00, 00);
 
-            foreach (Shift shift in _shifts)
+        public override void AddShift(Shift newshift)
+        {
+            try
             {
-                if (shift.StartDateTime.TimeOfDay < earliest)
-                    earliest = shift.StartDateTime.TimeOfDay;
-                if (shift.EndDateTime.TimeOfDay > latest)
+                // Validate dates
+                if (newshift.Date == this.Date)
                 {
-                    if (shift.EndDateTime.Date > _date.Date)
-                    {
-                        latest = EOD;
-                    }
-                    else
-                        latest = shift.EndDateTime.TimeOfDay;
-                }                  
-                
+                    ShiftList.Add(newshift);
+                }
+                else
+                {
+                    string ex = String.Format("Attempt to add new Shift with date {0} to incorrect workday {1}.", newshift.Date, this.Date);
+                    throw new Exception(ex);
+                }
             }
-            if (earliest == BOD && latest == EOD)
-                return true;
-            else
-                return false;
+            catch
+            {
+                throw;
+            }
+                
         }
-	}
+                
+            
+            
+    }
+
 }
+	
+

@@ -1,3 +1,4 @@
+using MCSO.Scheduling.ScheduleBase.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,45 +8,59 @@ namespace MCSO.Scheduling.ScheduleBase
 	public class WorkWeek : CalendarBaseScheduleItem
 	{
 		
-        internal List<WorkDay> _workDays;
-        public DateTime WeekStart { get; }
+        public List<WorkDay> WorkDayList { get; }
 
+ 
+
+        /// <summary>
+        /// Represents the work week as a collection of workdays.
+        /// </summary>
+        /// <param name="initialshift">Creating WorkWeek with inital Shift will automatically create corrisponding WorkDay</param>
         public WorkWeek(Shift initialshift):this(new WorkDay(initialshift))
         {
-      
+
         }
-        public WorkWeek(WorkDay initialday)
+        public WorkWeek(WorkDay workday)
         {
-            _workDays = new List<WorkDay>();
-
-            if ((int)initialday.Date.DayOfWeek == 0)
-                WeekStart = initialday.Date;
-            else
+            if (WorkDayList == null)
             {
-                int days = (int)initialday.Date.DayOfWeek;
-                DateTime startofweek = initialday.Date.AddDays(-days);
-                WeekStart = initialday.Date;
+                WorkDayList = new List<WorkDay>();
+                StartDate = workday.PartOfWeek;
+                EndDate = StartDate.AddDays(7);
             }
 
-            _workDays.Add(initialday);
+            try
+            {
+                if (workday.PartOfWeek == this.StartDate)
+                {
+                    WorkDayList.Add(workday);
+                }
+                else
+                {
+                    string ex = String.Format("Attempt to add new WorkDay with week date {0} to incorrect WorkWeek {1}.", 
+                        workday.PartOfWeek, this.StartDate);
+                    throw new Exception(ex);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            
         }
-
-        public void AddShift(Shift inputshift)
+       
+        public override void AddShift(Shift newshift)
 		{
-            if (_workDays.Exists(x => x.Date == inputshift.ShiftDate))
+            if (WorkDayList.Exists(x => x.Date == newshift.Date))
             {
-                WorkDay temp = _workDays.Find(y => y.Date == inputshift.ShiftDate);
-                temp.AddShift(inputshift);
+                WorkDay existingday = WorkDayList.Find(y => y.Date == newshift.Date);
+                existingday.AddShift(newshift);
             }
             else
             {
-                _workDays.Add(new WorkDay(inputshift));
+                WorkDayList.Add(new WorkDay(newshift));
             }
 		}
 
-		public bool ValidateFullTime()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

@@ -83,12 +83,8 @@ namespace MCSO.Scheduling.CSV.Input
                     DateTime starttime = DateTime.Parse(segments[7]);
                     DateTime endtime = DateTime.Parse(segments[8]);
 
-                    // Create Shift element
-
-                    var newshift = new Shift(starttime, endtime, shiftdesignation, employee);
-
                     // Populate Schedule
-                    schedule.AddShift(newshift);
+                    schedule.AddShift(employee, starttime, endtime, shiftdesignation);
                 }
                 catch
                 {

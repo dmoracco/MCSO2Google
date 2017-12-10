@@ -85,7 +85,6 @@
   <ItemGroup>
     <Compile Include="Classes\CalendarBaseScheduleItem.cs" />
     <Compile Include="Classes\CSVFile.cs" />
-    <Compile Include="Classes\CSVFilter.cs" />
     <Compile Include="Classes\Employee.cs" />
     <Compile Include="Classes\GoogleCalendarAPI.cs" />
     <Compile Include="Classes\Schedule.cs" />
