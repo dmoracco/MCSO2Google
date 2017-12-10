@@ -83,7 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ScheduleCalendar.cs" />
+    <Compile Include="Classes\CalendarBaseScheduleItem.cs" />
     <Compile Include="Classes\CSVFile.cs" />
     <Compile Include="Classes\CSVFilter.cs" />
     <Compile Include="Classes\Employee.cs" />

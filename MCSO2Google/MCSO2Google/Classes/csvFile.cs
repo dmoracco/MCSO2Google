@@ -1,46 +1,105 @@
+using MCSO.Scheduling.ScheduleBase;
+using MCSO.Scheduling.ScheduleBase.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace Scheduler
+namespace MCSO.Scheduling.CSV.Input
 {
     /// <summary>
-    /// FileStream object that also provides list of comma separated lines.
+    /// Parses CSV file by lines.
     /// </summary>
 
     public class CSVFile
     {
-        private StreamReader _fileLocation;
-        private List<string> _linelist;
-        private int _currentline;
+        /// <summary>
+        /// List of string entries of CSV file parsed by lines
+        /// </summary>
+        public List<string> EntryList { get; }
+     
 
         public CSVFile(string path)
         {
-            _currentline = 1;
-            //add handling for when bad file is passed or didnt open...
+            // Initialization
             string line;
-            _linelist = new List<string>();
+            EntryList = new List<string>();
 
-            _fileLocation = File.OpenText(path);
-            while ((line = _fileLocation.ReadLine()) != null)
+            // Open CSV File
+            try
             {
-                _linelist.Add(line);
+                using (StreamReader CSVFile = File.OpenText(path))
+                {
+                    // Check if properly formated Scheduling CSV File
+                    line = CSVFile.ReadLine();
+                    if (!line.Contains("ExpRefNum"))
+                    {
+                        throw new Exception("Selected file does not conform to MCSO Scheduler standard.");
+                    }
+                    // Populate EntryList
+                    while ((line = CSVFile.ReadLine()) != null)
+                    {
+                        EntryList.Add(line);
+                    }
+                }
             }
+            catch
+            {
+                throw;
+            }
+
+
         }
 
-        public string GetNextLine()
-        {
-            if (_currentline < _linelist.Count)
+        /// <summary>
+        /// Populate Schedule by parsing current CSV File
+        /// </summary>
+        /// <param name="schedule">Schedule object to populate</param>
+        public void PopulateSchedule(Schedule schedule)
+        {            
+            string[] segments;
+            foreach (string line in EntryList)
             {
-                string send = _linelist[_currentline];
-                _currentline++;
-                return send;
-            }
+                try
+                {
+                    // Separate values and clean output
+                    segments = line.Split(',');
+                    foreach (string part in segments)
+                    {
+                        part.Replace('"', ' ').Trim();
+                    }
+
+                    // Check employee existance, create if needed
+                    int employeenumber = Int32.Parse(segments[0]);
+                    string employeename = segments[1];
+                    var employee = schedule.EmployeeList.Find(x => x.EmployeeID == employeenumber);
+                    if (employee == null)
+                    {
+                        employee = new Employee(employeename, employeenumber);
+                    }
+
+                    // Retreive other values
+                    string shiftdesignation = segments[6];
+                    DateTime starttime = DateTime.Parse(segments[7]);
+                    DateTime endtime = DateTime.Parse(segments[8]);
+
+                    // Create Shift element
+
+                    var newshift = new Shift(starttime, endtime, shiftdesignation, employee);
+
+                    // Populate Schedule
+                    schedule.AddShift(newshift);
+                }
+                catch
+                {
+                    //ERROR LOGGING, BUT CONTINUE
+                }
+               
                 
-            else
-                return null;
+            }           
+
         }
+
     }
 }
     

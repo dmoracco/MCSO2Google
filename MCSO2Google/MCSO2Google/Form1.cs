@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MCSO.Scheduling.CSV.Input;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +14,7 @@ namespace MCSO2Google
 {
     public partial class Form1 : Form
     {
-        private Schedule _schedule;
+        private CSVFile _schedule;
 
         public Form1()
         {
@@ -38,7 +39,8 @@ namespace MCSO2Google
                 {
                     path = openfiledialog.FileName;
                     textBoxCSVPath.Text = path;
-                    _schedule = new Schedule(path);
+                    _schedule = new CSVFile(path);
+                    _schedule.PopulateSchedule(t)
                     btnConnect.Enabled = true;
                     textBoxGoogleAcct.Enabled = true;
 

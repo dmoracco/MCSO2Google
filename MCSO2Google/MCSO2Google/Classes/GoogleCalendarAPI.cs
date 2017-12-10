@@ -150,6 +150,29 @@ namespace Scheduler
             }
             
         }
+        public Event CreateCalendarEvent() // FROM SHIFT!
+        {
+            Event newshift = new Event()
+            {
+                //Id = _employee.EmployeeID + _start.ToString() + _end.ToString(),
+                Summary = _designation + " Shift",
+                Location = "1234 5th Ave SE, Bismarck, ND 58503",
+                Start = new EventDateTime()
+                {
+                    DateTime = _start,
+                    TimeZone = "America/Chicago",
 
-	}
+                },
+                End = new EventDateTime()
+                {
+                    DateTime = _end,
+                    TimeZone = "America/Chicago",
+                }
+
+            };
+            return newshift;
+
+        }
+
+    }
 }

@@ -2,28 +2,31 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Scheduler
+namespace MCSO.Scheduling.ScheduleBase.Data
 {
+    /// <summary>
+    /// Contains employee information.
+    /// </summary>
     public class Employee
     {
-        private string _name;
-        private int _employeeID;
-        private int _minHours;
-        private double _hoursWorked;
-        private string _roll;
-        public int VacationHours;
-        internal string _subCalendarID;
-
-        public int EmployeeID {get{return _employeeID; } }
-        public string Name { get { return _name; } }
+        /// <summary>
+        /// Name of employee.
+        /// </summary>
+        public string Name { get; }
+        /// <summary>
+        /// Employee ID number.
+        /// </summary>
+        public int EmployeeID { get; }
+        /// <summary>
+        /// ID of subcalendar on associated Schedule's Google Calendar
+        /// </summary>
+        public string SubCalendarID { get; set; }
 
         public Employee(string name, int id)
         {
-            _name = name;
-            _employeeID = id;
-            _minHours = 40;
-            _hoursWorked = 0;
-            _subCalendarID = "";
+            Name = name;
+            EmployeeID = id;
+            SubCalendarID = "";
         }
 	}
 }

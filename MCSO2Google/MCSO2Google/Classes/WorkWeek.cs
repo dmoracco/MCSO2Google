@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Scheduler
+namespace MCSO.Scheduling.ScheduleBase
 {
-	public class WorkWeek : ScheduleCalendar
+	public class WorkWeek : CalendarBaseScheduleItem
 	{
 		
         internal List<WorkDay> _workDays;

@@ -1,65 +1,86 @@
-using Google.Apis.Calendar.v3.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Scheduler
+namespace MCSO.Scheduling.ScheduleBase.Data
 {
+    /// <summary>
+    /// Represents a scheduled work shift
+    /// </summary>
     public class Shift
     {
-        private char _designation;
-        private DateTime _start;
-        private DateTime _end;
-        private bool _partialShift;
-        internal Employee _employee;
-        public DateTime StartDateTime { get { return _start; } }
-        public DateTime EndDateTime { get { return _end; } }
-        public DateTime ShiftDate { get {return _start.Date;} }
-        public string ShiftDesignation { get { return _designation.ToString(); } }
-
-        public Shift(DateTime start, DateTime end, char shiftID, Employee employee)
+        /// <summary>
+        /// Designates shift corisponding to shift legend
+        /// </summary>
+        public string ShiftDesignation { get; }
+        /// <summary>
+        /// Starting Date and Time of shift
+        /// </summary>
+        public DateTime StartDateTime { get; }
+        /// <summary>
+        /// Ending Date and Time of shift
+        /// </summary>
+        public DateTime EndDateTime { get; }
+        /// <summary>
+        /// Starting Date of shift
+        /// </summary>
+        public DateTime Date
         {
-            //validate these DateTime inputs
-            _start = start;
-            _end = end;
-            _designation = shiftID;
-            _partialShift = false;
-            _employee = employee;
+            get { return StartDateTime.Date; }
         }
-
-        public DateTime PartOfWeek()
+        /// <summary>
+        /// Employee assigned to shift
+        /// </summary>
+        public Employee Employee { get; }
+        /// <summary>
+        /// Returns the Date that begins the week (Sunday)
+        /// </summary>
+        public DateTime PartOfWeek
         {
-            if ((int)this._start.DayOfWeek == 0)
-                return _start.Date;
-            else
+            get
             {
-                int days = (int)this._start.DayOfWeek;
-                DateTime startofweek = this._start.AddDays(-days);
-                return startofweek.Date;
+                // Return if already Sunday
+                if ((int)StartDateTime.DayOfWeek == 0)
+                {
+                    return StartDateTime.Date;
+                }
+                // Calculate and return Date for previous Sunday
+                else
+                {
+                    int days = (int)StartDateTime.DayOfWeek;
+                    DateTime startofweek = StartDateTime.AddDays(-days);
+                    return startofweek.Date;
+                }
             }
         }
-        public Event CreateCalendarEvent()
+ 
+        public Shift(DateTime start, DateTime end, string shiftID, Employee employee)
         {
-            Event newshift = new Event()
+            try
             {
-                //Id = _employee.EmployeeID + _start.ToString() + _end.ToString(),
-                Summary = _designation + " Shift",
-                Location = "1234 5th Ave SE, Bismarck, ND 58503",
-                Start = new EventDateTime()
-                {
-                    DateTime = _start,
-                    TimeZone = "America/Chicago",
 
-                },
-                End = new EventDateTime()
+                // Set and validate Start and End Date/Times
+                StartDateTime = start;
+                if (DateTime.Compare(end, start) > 0)
                 {
-                    DateTime = _end,
-                    TimeZone = "America/Chicago",
+                    EndDateTime = end;
                 }
-                
-            };
-            return newshift;
+                else
+                {
+                    throw new Exception("Start Date/Time later or the same as End Date/Time");
+                }
 
+                // Assign Employee and other variables
+                ShiftDesignation = shiftID;
+                Employee = employee;
+            }
+            catch
+            {
+                throw;
+            }
         }
+
+        
+        
 	}
 }

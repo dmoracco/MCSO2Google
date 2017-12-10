@@ -3,62 +3,32 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Scheduler
+namespace MCSO.Scheduling.ScheduleBase
 {
-	public class Schedule : ScheduleCalendar
+    /// <summary>
+    /// Collection of Shifts organized by collection of WorkWeeks.
+    /// </summary>
+    public class Schedule : CalendarBaseScheduleItem
 	{
-        public List<Employee> _employees;
-        public List<WorkWeek> _workWeeks;
+        /// <summary>
+        /// List of Employees attached to current Schedule.
+        /// </summary>
+        public List<Employee> EmployeeList { get; }
+        /// <summary>
+        /// Collection of WorkWeeks within Schedule time frame.
+        /// </summary>
+        public List<WorkWeek> WorkWeekList { get; }
+
         public Schedule(string path)
 		{
-            _employees = new List<Employee>();
-            _workWeeks = new List<WorkWeek>();
-            CSVFile csv = new CSVFile(path);
-            string currentline = csv.GetNextLine();
-            bool test = false;
-
-
-            while (test == false)
-            {
-
-                string[] segments = currentline.Split(',');
-                for (int i = 0; i < segments.Length; i++)
-                    segments[i] = segments[i].Replace('"', ' ').Trim();
-                // Utilize Filter here? defaulting to dispatch's format...
-
-                int intbuffer = Int32.Parse(segments[0]);
-                
-                if (!_employees.Exists(x => x.EmployeeID == intbuffer))
-                {
-                    if (_employees.Exists(x => x.Name == segments[1]))
-                    {
-                        //pop up warning of existing names but different ID's, confirmation to continue
-                    }
-                    _employees.Add(new Employee(segments[1], intbuffer));
-                }
- 
-                Employee employeebuffer = _employees.Find(x => x.EmployeeID == intbuffer);
-
-
-                DateTime startbuffer = DateTime.Parse(segments[7]);
-                DateTime endbuffer = DateTime.Parse(segments[8]);
-                char[] letterbuffer = segments[6].ToCharArray();
-
-                Shift shiftbuffer = new Shift(startbuffer, endbuffer, letterbuffer[0], employeebuffer);
-
-                //validate unique Shift before adding it to WD, WW. IEquitable?
-
-                //try catch here?
-                this.AddShift(shiftbuffer);
-
-                currentline = csv.GetNextLine();
-                if (currentline == null)
-                    test = true;
-                
-            }
-            
+            EmployeeList = new List<Employee>();
+            WorkWeekList = new List<WorkWeek>();            
 		}
-        public void AddShift(Shift shiftbuffer)
+        /// <summary>
+        /// Adds shifts and automatically organizes into a WorkDay and WorkWeek.
+        /// </summary>
+        /// <param name="shiftbuffer"></param>
+        public override void AddShift(int employeenumber, DateTime starttime, DateTime endtime, string shiftdesignation)
         {
             if (_workWeeks.Exists(x => x.WeekStart == shiftbuffer.PartOfWeek()))
             {
@@ -70,10 +40,7 @@ namespace Scheduler
             }
         }
 
-        public void ConnectGoogle()
-        {
-            _cloudCalendar = new GoogleCalendarAPI();
-        }
+
         public void UploadCalendar()
         {
 
@@ -93,7 +60,7 @@ namespace Scheduler
                                 Console.WriteLine("Adding new sub calendar");
                                 newID = _cloudCalendar.AddCalendar(newsummary, "America/Chicago");
                                 shift._employee._subCalendarID = newID;
-                            } 
+                            }
                             else
                             {
                                 shift._employee._subCalendarID = newID;
@@ -101,13 +68,13 @@ namespace Scheduler
                         }
                         string subcalID = shift._employee._subCalendarID;
                         if (!_cloudCalendar.EventExist(shiftevent, subcalID))
-                        {                           
+                        {
                             _cloudCalendar.AddEvent(shiftevent, subcalID);
                         }
-                        
+
                     }
                 }
             }
         }
-	}
+    }
 }
