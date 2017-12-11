@@ -1,17 +1,12 @@
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Oauth2.v2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using MCSO.Scheduling.ScheduleBase.Data;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MCSO.Scheduling.GoogleAPI
 {
@@ -20,6 +15,8 @@ namespace MCSO.Scheduling.GoogleAPI
     /// </summary>
     public class GoogleCalendarAPI
 	{
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private UserCredential _credential;
         private CalendarService _service;
         private string _credPath;
@@ -28,22 +25,32 @@ namespace MCSO.Scheduling.GoogleAPI
         
         public GoogleCalendarAPI()
         {
+            log.Info("Creating new GoogleCalendarAPI");
             // Look for client_secret API key and create credential token
-            using (var stream =
-               new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
+            try
             {
-                _credPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.Personal);
-                _credPath = Path.Combine(_credPath, ".MCSOcredentials/MCSOcalendar.json");
+               using (var stream =
+               new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
+                {
+                    _credPath = System.Environment.GetFolderPath(
+                        System.Environment.SpecialFolder.Personal);
+                    _credPath = Path.Combine(_credPath, ".MCSOcredentials/MCSOcalendar.json");
 
-                _credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    _scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(_credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + _credPath);
+                    _credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                        GoogleClientSecrets.Load(stream).Secrets,
+                        _scopes,
+                        "user",
+                        CancellationToken.None,
+                        new FileDataStore(_credPath, true)).Result;
+                    Console.WriteLine("Credential file saved to: " + _credPath);
+                }
             }
+            catch (Exception ex)
+            {
+                log.Debug("Error while creating Google API credentials: {0}", ex);
+                throw;
+            }
+
 
             // Create Google Calendar API service.
             _service = new CalendarService(new BaseClientService.Initializer()
@@ -53,6 +60,14 @@ namespace MCSO.Scheduling.GoogleAPI
             });
         }
 
+        public ScheduleBase.Schedule Schedule
+        {
+            get => default(ScheduleBase.Schedule);
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// Searches CalendarList for matching subcalendar and returns its ID.
         /// </summary>
@@ -60,6 +75,7 @@ namespace MCSO.Scheduling.GoogleAPI
         /// <returns>Subcalendar ID</returns>
         public string FindCalendarID(string name)
         {
+            log.Info("Call for GoogleCalendarAPI::FindcalendarID");
             // Get Calendar List
             CalendarList calendarList = _service.CalendarList.List().Execute();
 
@@ -84,6 +100,7 @@ namespace MCSO.Scheduling.GoogleAPI
         /// <returns></returns>
         public bool EventExist(CalendarShiftEntry shiftentry)
         {
+            log.Info("Call for GoogleCalendarAPI::EventExist");
             // Build Events request
             EventsResource.ListRequest request = _service.Events.List(shiftentry.SubCalendarID);
             request.TimeMin = shiftentry.ShiftEvent.Start.DateTime;
@@ -93,17 +110,27 @@ namespace MCSO.Scheduling.GoogleAPI
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
             // Send request and parse Events response
-            Events events = request.Execute();
-            if (events.Items != null && events.Items.Count > 0)
+            try
             {
-                foreach (var eventItem in events.Items)
+                Events events = request.Execute();
+                if (events.Items != null && events.Items.Count > 0)
                 {
-                    if (eventItem.Summary == shiftentry.ShiftEvent.Summary)
+                    foreach (var eventItem in events.Items)
                     {
-                        return true;
+                        if (eventItem.Summary == shiftentry.ShiftEvent.Summary)
+                        {
+                            return true;
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                log.Debug("Error while requesting Google Calander Event", ex);
+                throw;
+            }
+            
+            
 
             return false;
         }
@@ -115,6 +142,7 @@ namespace MCSO.Scheduling.GoogleAPI
         /// <returns></returns>
         public string AddCalendar(string summary)
         {
+            log.Info("Call for GoogleCalanderAPI::AddCalendar");
             // Create new calendar to upload
             Calendar newcalendar = new Calendar()
             {
@@ -123,10 +151,20 @@ namespace MCSO.Scheduling.GoogleAPI
             };
 
             // Upload
-            Calendar createdCalendar = _service.Calendars.Insert(newcalendar).Execute();
+            try
+            {
+                Calendar createdCalendar = _service.Calendars.Insert(newcalendar).Execute();
+                // Returns uploaded calendar's ID
+                return createdCalendar.Id;
+            }
+            catch (Exception ex)
+            {
+                log.Debug("Error while attemping to add new SubCalendar to Google Calendar", ex);
+                throw;
+            }
+            
 
-            // Returns uploaded calendar's ID
-            return createdCalendar.Id;
+            
         }
 
         /// <summary>
@@ -134,7 +172,8 @@ namespace MCSO.Scheduling.GoogleAPI
         /// </summary>
         /// <param name="shiftentry"></param>
         public void AddEvent(CalendarShiftEntry shiftentry)
-        { 
+        {
+            log.Info("Call to GoogleCalendarAPI::AddEvent");
             if (shiftentry.SubCalendarID == "")
             {
                 string calenderID = FindCalendarID(shiftentry.EmployeeName);
@@ -147,8 +186,20 @@ namespace MCSO.Scheduling.GoogleAPI
 
             if (!EventExist(shiftentry))
             {
-                EventsResource.InsertRequest request = _service.Events.Insert(shiftentry.ShiftEvent, shiftentry.SubCalendarID);
-                Event createdEvent = request.Execute();
+                try
+                {
+                    EventsResource.InsertRequest request = _service.Events.Insert(shiftentry.ShiftEvent, shiftentry.SubCalendarID);
+                    Event createdEvent = request.Execute();
+                    log.Info("CalandarShiftEntry successfully uploaded");
+                }
+                catch (Exception ex)
+                {
+                    log.Debug("Error while attempting to add new event to Google Calander SubCalendar", ex);
+                }
+            }
+            else
+            {
+                log.Info("CalanderShiftEntry already exists... skipping");
             }
         }
 
@@ -158,10 +209,19 @@ namespace MCSO.Scheduling.GoogleAPI
         /// <returns>Email address of primary Google Calendar account</returns>
         public string GetAccountEmail()
         {
-
-            var primeCalendar = _service.Calendars.Get("primary").Execute();
-            string email = primeCalendar.Id;
-            return email;
+            log.Info("Call to GoogleCalanderAPI::GetAccountEmail");
+            try
+            {
+                var primeCalendar = _service.Calendars.Get("primary").Execute();
+                string email = primeCalendar.Id;
+                return email;
+            }
+            catch (Exception ex)
+            {
+                log.Debug("Error while requesting \"primary\" Google Calander ID (usually email address)", ex);
+                throw; 
+            }
+            
         }
 
         /// <summary>
@@ -169,16 +229,24 @@ namespace MCSO.Scheduling.GoogleAPI
         /// </summary>
         public void ClearCredentials()
         {
-            if (Directory.Exists(_credPath))
+            log.Info("Call for GoogleCalanderAPI::ClearCredentials");
+            try
             {
-                foreach (var file in Directory.GetFiles(_credPath))
+                if (Directory.Exists(_credPath))
                 {
-                    File.Delete(file);
+                    foreach (var file in Directory.GetFiles(_credPath))
+                    {
+                        File.Delete(file);
+                    }
+                    Directory.Delete(_credPath);
+
                 }
-                Directory.Delete(_credPath);
-
             }
-
+            catch (Exception ex)
+            {
+                log.Debug("Error attempting to delete credentials folder", ex);
+            }
+            
         }
         
     }

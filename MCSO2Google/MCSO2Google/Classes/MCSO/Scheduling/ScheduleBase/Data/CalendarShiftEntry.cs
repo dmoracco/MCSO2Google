@@ -12,6 +12,7 @@ namespace MCSO.Scheduling.ScheduleBase.Data
     /// </summary>
     public class CalendarShiftEntry
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         /// <summary>
         /// Event with Shift information to be entered into Google Calendar
         /// </summary>
@@ -25,8 +26,17 @@ namespace MCSO.Scheduling.ScheduleBase.Data
         /// </summary>
         public string SubCalendarID { get; set; }
 
+        public GoogleAPI.GoogleCalendarAPI GoogleCalendarAPI
+        {
+            get => default(GoogleAPI.GoogleCalendarAPI);
+            set
+            {
+            }
+        }
+
         public CalendarShiftEntry(Shift shift)
         {
+            log.Info("Creating new CalendarShiftEntry");
             SubCalendarID = shift.Employee.SubCalendarID;
             EmployeeName = shift.Employee.Name;
 

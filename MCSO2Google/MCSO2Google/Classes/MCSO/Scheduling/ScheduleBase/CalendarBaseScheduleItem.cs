@@ -9,6 +9,7 @@ namespace MCSO.Scheduling.ScheduleBase
 {
     public abstract class CalendarBaseScheduleItem
     {
+        protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         internal protected virtual DateTime StartDate { get; set; }
         protected virtual DateTime EndDate { get; set; }
         internal protected virtual GoogleCalendarAPI GoogleCalendar { get; set; }
@@ -22,9 +23,19 @@ namespace MCSO.Scheduling.ScheduleBase
         /// <param name="shiftdesignation"></param>
         public void AddShift(Employee employee, DateTime starttime, DateTime endtime, string shiftdesignation, int controlnumber)
         {
+            log.Info("Call for Base::AddShift(Employee, DateTime, DateTime, string, int) method");
             // Create new Shift element.
-            var newshift = new Shift(employee, starttime, endtime, shiftdesignation, controlnumber);
-            AddShift(newshift);
+            try
+            {
+                var newshift = new Shift(employee, starttime, endtime, shiftdesignation, controlnumber);
+                AddShift(newshift);
+            }
+            catch (Exception ex)
+            {
+                log.Debug("Failed to create Shift", ex);
+            }
+            
+            
         }
         public abstract void AddShift(Shift newshift);
 
@@ -33,7 +44,15 @@ namespace MCSO.Scheduling.ScheduleBase
         /// </summary>
         public void ConnectGoogle()
         {
-            GoogleCalendar = new GoogleCalendarAPI();
+            log.Info("Call for Base:ConnectGoogle()");
+            try
+            {
+                GoogleCalendar = new GoogleCalendarAPI();
+            }
+            catch (Exception ex)
+            {
+                log.Debug("Error while creating new GoogleCalanderAPI", ex);
+            }
         }
 
     }

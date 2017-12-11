@@ -1,21 +1,15 @@
 ﻿using MCSO.Scheduling.CSV;
 using MCSO.Scheduling.ScheduleBase;
 using MCSO.Scheduling.ScheduleBase.Data;
-using MCSO.Scheduling.GoogleAPI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MCSO.Scheduling.Forms
 {
     public partial class MainForm : Form
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private Schedule _currentSchedule;
 
         public MainForm()
@@ -43,7 +37,6 @@ namespace MCSO.Scheduling.Forms
             btnConnect.Text = "Change";
             btnOpenCSV.Enabled = true;
             textBoxCSVPath.Enabled = true;
-
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -73,9 +66,8 @@ namespace MCSO.Scheduling.Forms
                 }
                 catch (Exception ex)
                 {
-                    string msg = ex + "Exception thrown.";
-                    MessageBox.Show(msg, "Open CSV", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    log.Debug("Error while opening/parsing CSV", ex);
+                    MessageBox.Show("Error opening/parsing CSV", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -86,7 +78,6 @@ namespace MCSO.Scheduling.Forms
             }
 
             btnUpload.Enabled = true;
-            btnAdd.Enabled = true;
 
         }
         private void listViewShifts_refresh()
@@ -110,20 +101,27 @@ namespace MCSO.Scheduling.Forms
                     }
                 }
             }
+            if (listViewShifts.Items.Count > 0)
+            {
+                btnEdit.Enabled = true;
+                btnRemove.Enabled = true;
+                btnUpload.Enabled = true;
+                btnAdd.Enabled = true;
+            }
+            else
+            {
+                btnEdit.Enabled = false;
+                btnRemove.Enabled = false;
+                btnUpload.Enabled = false;
+                btnAdd.Enabled = false;
+            }
         }
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        
+       
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
             toolStripStatusUpload.Text = "Uploading...";
-            this.UseWaitCursor = true;
             _currentSchedule.UploadSchedule();
-            this.UseWaitCursor = false;
             toolStripStatusUpload.Text = "Finished!";
             
         }

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MCSO.Scheduling.Forms
@@ -14,6 +7,15 @@ namespace MCSO.Scheduling.Forms
     public partial class CalendarSubForm : Form
     {
         public DateTime Time { get; set; }
+
+        public EditSubForm EditSubForm
+        {
+            get => default(EditSubForm);
+            set
+            {
+            }
+        }
+
         private DateTime _date;
 
         public CalendarSubForm()

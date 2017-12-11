@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnOpenCSV = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
             this.textBoxCSVPath = new System.Windows.Forms.TextBox();
@@ -38,13 +39,13 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnUpload = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusUpload = new System.Windows.Forms.ToolStripStatusLabel();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,6 +132,10 @@
             this.columnHeader5.Text = "End Time";
             this.columnHeader5.Width = 75;
             // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Width = 0;
+            // 
             // btnAdd
             // 
             this.btnAdd.Enabled = false;
@@ -144,6 +149,7 @@
             // 
             // btnEdit
             // 
+            this.btnEdit.Enabled = false;
             this.btnEdit.Location = new System.Drawing.Point(467, 117);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(76, 23);
@@ -154,6 +160,7 @@
             // 
             // btnRemove
             // 
+            this.btnRemove.Enabled = false;
             this.btnRemove.Location = new System.Drawing.Point(467, 146);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(76, 25);
@@ -189,10 +196,6 @@
             this.toolStripStatusUpload.Size = new System.Drawing.Size(35, 17);
             this.toolStripStatusUpload.Text = "Idle...";
             // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Width = 0;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -208,6 +211,7 @@
             this.Controls.Add(this.textBoxCSVPath);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnOpenCSV);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "MSCO Schedule Assistant";

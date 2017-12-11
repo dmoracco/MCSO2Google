@@ -16,5 +16,21 @@ namespace MCSO.Scheduling.ScheduleBase.Data
         public const string Address = "205 1st Ave NW, Mandan, ND 58554";
         public const string IANATimeZone = "America/Chicago";
         public static string[] DispatchLegend = { "A", "B", "C", "D", "E", "F", "G", "I", "X", "FL", "AD", "T", "V" };
+
+        public GoogleAPI.GoogleCalendarAPI GoogleCalendarAPI
+        {
+            get => default(GoogleAPI.GoogleCalendarAPI);
+            set
+            {
+            }
+        }
+
+        public CalendarShiftEntry CalendarShiftEntry
+        {
+            get => default(CalendarShiftEntry);
+            set
+            {
+            }
+        }
     }
 }

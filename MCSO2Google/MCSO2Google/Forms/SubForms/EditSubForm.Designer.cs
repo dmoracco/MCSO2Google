@@ -139,6 +139,7 @@
             this.Controls.Add(this.textBoxStartDate);
             this.Controls.Add(this.comboBoxDesignation);
             this.Controls.Add(this.comboBoxEmployee);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
             this.Name = "EditSubForm";
             this.Text = "Add Shift";

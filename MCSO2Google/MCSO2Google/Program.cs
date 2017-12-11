@@ -9,6 +9,7 @@ namespace MCSO.Scheduling
 {
     static class Program
     {
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -18,6 +19,7 @@ namespace MCSO.Scheduling
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+            
         }
     }
 }

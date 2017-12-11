@@ -1,24 +1,28 @@
 ﻿using MCSO.Scheduling.ScheduleBase.Data;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MCSO.Scheduling.Forms
 {
     public partial class EditSubForm : Form
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public string Operation { get; set; }
         public List<Employee> EmployeeList { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string ShiftDesignation { get; set; }
         public Employee Employee { get; set; }
+
+        public MainForm MainForm
+        {
+            get => default(MainForm);
+            set
+            {
+            }
+        }
 
         public EditSubForm()
         {
@@ -37,10 +41,17 @@ namespace MCSO.Scheduling.Forms
             }
             if (Operation == "Add")
             {
-                comboBoxDesignation.SelectedIndex = 0;
-                comboBoxEmployee.SelectedIndex = 0;
-                Employee = EmployeeList[0];
-                ShiftDesignation = MCSOstatics.DispatchLegend[0];
+                try
+                {
+                    comboBoxDesignation.SelectedIndex = 0;
+                    comboBoxEmployee.SelectedIndex = 0;
+                    Employee = EmployeeList[0];
+                    ShiftDesignation = MCSOstatics.DispatchLegend[0];
+                }
+                catch (Exception ex)
+                {
+                    log.Debug("Error loading Add Shift EditSubForm", ex);
+                }
             }
             else if (Operation == "Edit")
             {

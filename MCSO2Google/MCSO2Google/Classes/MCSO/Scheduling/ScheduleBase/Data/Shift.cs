@@ -9,6 +9,7 @@ namespace MCSO.Scheduling.ScheduleBase.Data
     /// </summary>
     public class Shift
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         /// <summary>
         /// Designates shift corisponding to shift legend
         /// </summary>
@@ -54,21 +55,50 @@ namespace MCSO.Scheduling.ScheduleBase.Data
             }
         }
         public int ControlNumber { get; }
- 
+
+        public Schedule Schedule
+        {
+            get => default(Schedule);
+            set
+            {
+            }
+        }
+
+        public WorkWeek WorkWeek
+        {
+            get => default(WorkWeek);
+            set
+            {
+            }
+        }
+
+        public WorkDay WorkDay
+        {
+            get => default(WorkDay);
+            set
+            {
+            }
+        }
+
         public Shift(Employee employee, DateTime starttime, DateTime endtime, string shiftdesignation, int controlnumber)
         {
+            log.Info("Creating new Shift");
             try
             {
 
                 // Set and validate Start and End Date/Times
                 StartDateTime = starttime;
-                if (DateTime.Compare(endtime, starttime) > 0)
+                if (DateTime.Compare(endtime, starttime) > 0 || shiftdesignation == "Vacation" )
                 {
+                    if (shiftdesignation == "Vacation")
+                    {
+                        endtime = endtime.AddDays(1);
+                    }
                     EndDateTime = endtime;
                 }
                 else
-                {
-                    throw new Exception("Start Date/Time later or the same as End Date/Time");
+                { 
+                    throw new Exception("End Date/Time earlier than Start Date/Time");
                 }
 
                 // Assign Employee and other variables
@@ -76,8 +106,9 @@ namespace MCSO.Scheduling.ScheduleBase.Data
                 Employee = employee;
                 ControlNumber = controlnumber;
             }
-            catch
+            catch (Exception ex)
             {
+                log.Debug("Error while validating data of new Shift", ex);
                 throw;
             }
         }

@@ -7,21 +7,30 @@ using System.IO;
 
 namespace MCSO.Scheduling.CSV
 {
+    
     /// <summary>
     /// Handles the parsing of MCSO Schedule Comma Separated Value files.
     /// </summary>
-
     public class CSVFile
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         /// <summary>
         /// List of string entries of CSV file parsed by lines
         /// </summary>
         public List<string> EntryList { get; }
-     
+
+        public Forms.MainForm MainForm
+        {
+            get => default(Forms.MainForm);
+            set
+            {
+            }
+        }
 
         public CSVFile(string path)
         {
-            // Initialization
+            // Initialization            
+            log.Info("Creating CSVFile object");
             string line;
             EntryList = new List<string>();
 
@@ -45,7 +54,7 @@ namespace MCSO.Scheduling.CSV
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                log.Debug("Error while attempting to open CSV file: {0}" , ex);
                 throw;
             }
 
@@ -57,7 +66,8 @@ namespace MCSO.Scheduling.CSV
         /// </summary>
         /// <param name="schedule">Schedule object to populate</param>
         public void PopulateSchedule(Schedule schedule)
-        {            
+        {
+            log.Info("Call for CSVFile::PopulateSchedule");
             string[] segments;
             foreach (string line in EntryList)
             {
@@ -65,9 +75,9 @@ namespace MCSO.Scheduling.CSV
                 {
                     // Separate values and clean output
                     segments = line.Split(',');
-                    foreach (string part in segments)
+                    for (int i = 0; i < segments.Length; i++)
                     {
-                        part.Replace('"', ' ').Trim();
+                        segments[i] = segments[i].Replace("\"", " ").Trim();
                     }
 
                     // Check employee existance, create if needed
@@ -90,8 +100,8 @@ namespace MCSO.Scheduling.CSV
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
-                    //ERROR LOGGING, BUT CONTINUE
+                    string errmsg = String.Format("Error while populating line:\n {0} \n with error {1}... Continueing", line, ex);
+                    log.Debug(errmsg);
                 }
                
                 

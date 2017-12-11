@@ -1,7 +1,6 @@
 using MCSO.Scheduling.ScheduleBase.Data;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MCSO.Scheduling.ScheduleBase
 {
@@ -13,7 +12,15 @@ namespace MCSO.Scheduling.ScheduleBase
 		
         public List<WorkDay> WorkDayList { get; }
 
- 
+        public Schedule Schedule
+        {
+            get => default(Schedule);
+            set
+            {
+            }
+        }
+
+
 
         /// <summary>
         /// Represents the work week as a collection of workdays.
@@ -21,10 +28,11 @@ namespace MCSO.Scheduling.ScheduleBase
         /// <param name="initialshift">Creating WorkWeek with inital Shift will automatically create corrisponding WorkDay</param>
         public WorkWeek(Shift initialshift):this(new WorkDay(initialshift))
         {
-
+            log.Info("Creating WorkWeek(Shift)");
         }
         public WorkWeek(WorkDay workday)
         {
+            log.Info("Creating WorkWeek(WorkDay)");
             if (WorkDayList == null)
             {
                 WorkDayList = new List<WorkDay>();
@@ -45,15 +53,16 @@ namespace MCSO.Scheduling.ScheduleBase
                     throw new Exception(ex);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                log.Debug("Error validation WorkDay data while sorting into WorkWeek", ex);
             }
             
         }
        
         public override void AddShift(Shift newshift)
 		{
+            log.Info("Call for WorkWeek::AddShift(Shift)");
             if (WorkDayList.Exists(x => x.Date == newshift.Date))
             {
                 WorkDay existingday = WorkDayList.Find(y => y.Date == newshift.Date);

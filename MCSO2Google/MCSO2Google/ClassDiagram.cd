@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="MCSO.Scheduling.Forms.MainForm" Collapsed="true">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAgAAQACAAAACQAACAiGD6hwAAgAACUQAAAAgEACM=</HashCode>
+      <FileName>Forms\MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCSO.Scheduling.CSV.CSVFile">
+    <Position X="8.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAACAAAAAAAACAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\CSV\CSVFile.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MainForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.ScheduleBase.Schedule">
+    <Position X="6" Y="4.25" Width="1.75" />
+    <AssociationLine Name="CalendarShiftEntry" Type="MCSO.Scheduling.ScheduleBase.Data.CalendarShiftEntry" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.75" Y="6.572" />
+        <Point X="9.5" Y="6.572" />
+        <Point X="9.5" Y="8.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAJEIACAABAAAEEAAEAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\ScheduleBase\Schedule.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CSVFile" />
+      <Property Name="MainForm" />
+      <Property Name="CalendarShiftEntry" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.ScheduleBase.CalendarBaseScheduleItem">
+    <Position X="4" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIBAAAAACAAgAAACAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\ScheduleBase\CalendarBaseScheduleItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCSO.Scheduling.ScheduleBase.WorkWeek">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAgAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\ScheduleBase\WorkWeek.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Schedule" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.ScheduleBase.WorkDay">
+    <Position X="2" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAEABAAAAAAAIACA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\ScheduleBase\WorkDay.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="WorkWeek" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.ScheduleBase.Data.CalendarShiftEntry">
+    <Position X="8.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAABAAAAACAAEAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\ScheduleBase\Data\CalendarShiftEntry.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GoogleCalendarAPI" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.ScheduleBase.Data.Employee">
+    <Position X="11.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAACAUEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\ScheduleBase\Data\Employee.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CSVFile" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.ScheduleBase.Data.MCSOstatics">
+    <Position X="8.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAEAgAAAAEAAAQAAAAAAAACABAAAAAAAAA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\ScheduleBase\Data\MCSOstatics.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GoogleCalendarAPI" />
+      <Property Name="CalendarShiftEntry" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.ScheduleBase.Data.Shift">
+    <Position X="3.5" Y="7.25" Width="1.5" />
+    <AssociationLine Name="WorkWeek" Type="MCSO.Scheduling.ScheduleBase.WorkWeek" FixedFromPoint="true">
+      <Path>
+        <Point X="4.688" Y="7.25" />
+        <Point X="4.688" Y="6.319" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="WorkDay" Type="MCSO.Scheduling.ScheduleBase.WorkDay" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.5" Y="8.375" />
+        <Point X="2.5" Y="8.375" />
+        <Point X="2.5" Y="6.511" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAIACAAgAAAEAAAAAAACAAACEAAAEABQAAAAAAAACA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\ScheduleBase\Data\Shift.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Schedule" />
+      <Property Name="WorkWeek" />
+      <Property Name="WorkDay" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.GoogleAPI.GoogleCalendarAPI">
+    <Position X="6" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAIAAAAQEABQIEAACACAAEAAAAABAEAAAAAAAAA=</HashCode>
+      <FileName>Classes\MCSO\Scheduling\GoogleAPI\GoogleCalendarAPI.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Schedule" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.Forms.EditSubForm" Collapsed="true">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIAIQAIgCACAAEQAgChCIACCAQBAEACAAEAAAAAACA=</HashCode>
+      <FileName>Forms\SubForms\EditSubForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MainForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCSO.Scheduling.Forms.CalendarSubForm" Collapsed="true">
+    <Position X="11" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAARACAAAAEABgCAAMACAAAAAUAAAAAACAAAAQA=</HashCode>
+      <FileName>Forms\SubForms\CalendarSubForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="EditSubForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

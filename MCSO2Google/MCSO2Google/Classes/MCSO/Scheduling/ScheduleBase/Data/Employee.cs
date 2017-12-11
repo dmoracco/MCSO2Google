@@ -9,6 +9,7 @@ namespace MCSO.Scheduling.ScheduleBase.Data
     /// </summary>
     public class Employee
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         /// <summary>
         /// Name of employee.
         /// </summary>
@@ -22,8 +23,17 @@ namespace MCSO.Scheduling.ScheduleBase.Data
         /// </summary>
         public string SubCalendarID { get; set; }
 
+        public CSV.CSVFile CSVFile
+        {
+            get => default(CSV.CSVFile);
+            set
+            {
+            }
+        }
+
         public Employee(string name, int id)
         {
+            log.Info("Creating new Employee");
             Name = name;
             EmployeeID = id;
             SubCalendarID = "";

@@ -22,8 +22,18 @@ namespace MCSO.Scheduling.ScheduleBase
         /// Returns the Date of the begining of the week this work day is in. (Sunday)
         /// </summary>
         public DateTime PartOfWeek { get; }
+
+        public WorkWeek WorkWeek
+        {
+            get => default(WorkWeek);
+            set
+            {
+            }
+        }
+
         public WorkDay(Shift initialshift)
         {
+            log.Info("Creating WorkDay");
             ShiftList = new List<Shift>();
             Date = initialshift.Date;
             AddShift(initialshift);            
@@ -32,6 +42,7 @@ namespace MCSO.Scheduling.ScheduleBase
 
         public override void AddShift(Shift newshift)
         {
+            log.Info("Call for WorkDay::Addshift");
             try
             {
                 // Validate dates
@@ -45,15 +56,13 @@ namespace MCSO.Scheduling.ScheduleBase
                     throw new Exception(ex);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                log.Debug("Error validating Shift data while sorting into Workday", ex);                
             }
                 
         }
-                
-            
-            
+                           
     }
 
 }
