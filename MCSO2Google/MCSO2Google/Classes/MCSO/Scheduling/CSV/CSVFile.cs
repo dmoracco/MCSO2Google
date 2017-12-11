@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace MCSO.Scheduling.CSV.Input
+namespace MCSO.Scheduling.CSV
 {
     /// <summary>
-    /// Parses CSV file by lines.
+    /// Handles the parsing of MCSO Schedule Comma Separated Value files.
     /// </summary>
 
     public class CSVFile
@@ -43,8 +43,9 @@ namespace MCSO.Scheduling.CSV.Input
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 throw;
             }
 
@@ -76,6 +77,7 @@ namespace MCSO.Scheduling.CSV.Input
                     if (employee == null)
                     {
                         employee = new Employee(employeename, employeenumber);
+                        schedule.EmployeeList.Add(employee);
                     }
 
                     // Retreive other values
@@ -86,8 +88,9 @@ namespace MCSO.Scheduling.CSV.Input
                     // Populate Schedule
                     schedule.AddShift(employee, starttime, endtime, shiftdesignation);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex);
                     //ERROR LOGGING, BUT CONTINUE
                 }
                

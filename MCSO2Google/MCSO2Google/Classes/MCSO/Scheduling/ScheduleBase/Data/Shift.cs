@@ -5,7 +5,7 @@ using System.Text;
 namespace MCSO.Scheduling.ScheduleBase.Data
 {
     /// <summary>
-    /// Represents a scheduled work shift
+    /// Data representing a assigned work shift.
     /// </summary>
     public class Shift
     {
@@ -53,8 +53,9 @@ namespace MCSO.Scheduling.ScheduleBase.Data
                 }
             }
         }
+        public int ControlNumber { get; }
  
-        public Shift(Employee employee, DateTime starttime, DateTime endtime, string shiftdesignation)
+        public Shift(Employee employee, DateTime starttime, DateTime endtime, string shiftdesignation, int controlnumber)
         {
             try
             {
@@ -73,6 +74,7 @@ namespace MCSO.Scheduling.ScheduleBase.Data
                 // Assign Employee and other variables
                 ShiftDesignation = shiftdesignation;
                 Employee = employee;
+                ControlNumber = controlnumber;
             }
             catch
             {

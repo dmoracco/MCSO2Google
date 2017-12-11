@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace MCSO.Scheduling
+namespace MCSO.Scheduling.ScheduleBase
 {
     public abstract class CalendarBaseScheduleItem
     {
         internal protected virtual DateTime StartDate { get; set; }
         protected virtual DateTime EndDate { get; set; }
-        protected virtual GoogleCalendarAPI GoogleCalendar { get; set; }
+        internal protected virtual GoogleCalendarAPI GoogleCalendar { get; set; }
 
         /// <summary>
         /// Creates new shift element and adds it to date respective container.
@@ -20,10 +20,10 @@ namespace MCSO.Scheduling
         /// <param name="starttime"></param>
         /// <param name="endtime"></param>
         /// <param name="shiftdesignation"></param>
-        public void AddShift(Employee employee, DateTime starttime, DateTime endtime, string shiftdesignation)
+        public void AddShift(Employee employee, DateTime starttime, DateTime endtime, string shiftdesignation, int controlnumber)
         {
             // Create new Shift element.
-            var newshift = new Shift(employee, starttime, endtime, shiftdesignation);
+            var newshift = new Shift(employee, starttime, endtime, shiftdesignation, controlnumber);
             AddShift(newshift);
         }
         public abstract void AddShift(Shift newshift);

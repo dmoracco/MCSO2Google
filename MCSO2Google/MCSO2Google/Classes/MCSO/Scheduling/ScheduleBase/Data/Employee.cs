@@ -5,7 +5,7 @@ using System.Text;
 namespace MCSO.Scheduling.ScheduleBase.Data
 {
     /// <summary>
-    /// Contains employee information.
+    /// Data representing a MCSO employee.
     /// </summary>
     public class Employee
     {

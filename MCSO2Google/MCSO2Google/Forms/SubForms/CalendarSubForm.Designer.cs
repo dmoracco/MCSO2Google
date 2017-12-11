@@ -1,6 +1,6 @@
-﻿namespace Scheduler
+﻿namespace MCSO.Scheduling.Forms
 {
-    partial class Form3
+    partial class CalendarSubForm
     {
         /// <summary>
         /// Required designer variable.

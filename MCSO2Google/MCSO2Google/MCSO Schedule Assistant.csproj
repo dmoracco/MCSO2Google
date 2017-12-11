@@ -83,42 +83,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\CalendarBaseScheduleItem.cs" />
-    <Compile Include="Classes\CSVFile.cs" />
-    <Compile Include="Classes\Employee.cs" />
-    <Compile Include="Classes\GoogleCalendarAPI.cs" />
-    <Compile Include="Classes\Schedule.cs" />
-    <Compile Include="Classes\Shift.cs" />
-    <Compile Include="Classes\WorkDay.cs" />
-    <Compile Include="Classes\WorkWeek.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\CalendarBaseScheduleItem.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\Data\CalendarShiftEntry.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\CSV\CSVFile.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\Data\Employee.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\GoogleAPI\GoogleCalendarAPI.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\Data\MCSOstatics.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\Schedule.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\Data\Shift.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\WorkDay.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\WorkWeek.cs" />
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="Forms\SubForms\EditSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="Forms\SubForms\EditSubForm.Designer.cs">
+      <DependentUpon>EditSubForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form3.cs">
+    <Compile Include="Forms\SubForms\CalendarSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Forms\SubForms\CalendarSubForm.Designer.cs">
+      <DependentUpon>CalendarSubForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SubForms\EditSubForm.resx">
+      <DependentUpon>EditSubForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SubForms\CalendarSubForm.resx">
+      <DependentUpon>CalendarSubForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

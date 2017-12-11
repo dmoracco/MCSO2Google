@@ -1,6 +1,6 @@
-﻿namespace Scheduler
+﻿namespace MCSO.Scheduling.Forms
 {
-    partial class Form2
+    partial class EditSubForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditSubForm));
             this.comboBoxEmployee = new System.Windows.Forms.ComboBox();
             this.comboBoxDesignation = new System.Windows.Forms.ComboBox();
             this.textBoxStartDate = new System.Windows.Forms.TextBox();
@@ -126,7 +126,7 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // Form2
+            // EditSubForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -140,9 +140,9 @@
             this.Controls.Add(this.comboBoxDesignation);
             this.Controls.Add(this.comboBoxEmployee);
             this.MinimizeBox = false;
-            this.Name = "Form2";
+            this.Name = "EditSubForm";
             this.Text = "Add Shift";
-            this.Load += new System.EventHandler(this.Form2_Load);
+            this.Load += new System.EventHandler(this.EditSubForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

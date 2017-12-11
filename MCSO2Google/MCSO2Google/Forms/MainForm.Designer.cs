@@ -1,6 +1,6 @@
-﻿namespace MCSO2Google
+﻿namespace MCSO.Scheduling.Forms
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -44,12 +44,14 @@
             this.btnUpload = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusUpload = new System.Windows.Forms.ToolStripStatusLabel();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOpenCSV
             // 
-            this.btnOpenCSV.Location = new System.Drawing.Point(385, 16);
+            this.btnOpenCSV.Enabled = false;
+            this.btnOpenCSV.Location = new System.Drawing.Point(386, 47);
             this.btnOpenCSV.Name = "btnOpenCSV";
             this.btnOpenCSV.Size = new System.Drawing.Size(75, 23);
             this.btnOpenCSV.TabIndex = 0;
@@ -59,8 +61,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Enabled = false;
-            this.btnConnect.Location = new System.Drawing.Point(385, 45);
+            this.btnConnect.Location = new System.Drawing.Point(386, 18);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 23);
             this.btnConnect.TabIndex = 1;
@@ -70,15 +71,15 @@
             // 
             // textBoxCSVPath
             // 
-            this.textBoxCSVPath.Location = new System.Drawing.Point(95, 18);
+            this.textBoxCSVPath.Enabled = false;
+            this.textBoxCSVPath.Location = new System.Drawing.Point(92, 47);
             this.textBoxCSVPath.Name = "textBoxCSVPath";
             this.textBoxCSVPath.Size = new System.Drawing.Size(275, 20);
             this.textBoxCSVPath.TabIndex = 3;
             // 
             // textBoxGoogleAcct
             // 
-            this.textBoxGoogleAcct.Enabled = false;
-            this.textBoxGoogleAcct.Location = new System.Drawing.Point(95, 47);
+            this.textBoxGoogleAcct.Location = new System.Drawing.Point(92, 20);
             this.textBoxGoogleAcct.Name = "textBoxGoogleAcct";
             this.textBoxGoogleAcct.ReadOnly = true;
             this.textBoxGoogleAcct.Size = new System.Drawing.Size(275, 20);
@@ -91,25 +92,29 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader6});
             this.listViewShifts.FullRowSelect = true;
             this.listViewShifts.GridLines = true;
             this.listViewShifts.Location = new System.Drawing.Point(12, 88);
+            this.listViewShifts.MultiSelect = false;
             this.listViewShifts.Name = "listViewShifts";
-            this.listViewShifts.Size = new System.Drawing.Size(579, 266);
+            this.listViewShifts.Size = new System.Drawing.Size(449, 266);
             this.listViewShifts.TabIndex = 5;
             this.listViewShifts.UseCompatibleStateImageBehavior = false;
             this.listViewShifts.View = System.Windows.Forms.View.Details;
+            this.listViewShifts.SelectedIndexChanged += new System.EventHandler(this.listViewShifts_SelectedIndexChanged);
+            this.listViewShifts.DoubleClick += new System.EventHandler(this.listViewShifts_DoubleClick);
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "Date";
-            this.columnHeader1.Width = 150;
+            this.columnHeader1.Width = 75;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Name";
-            this.columnHeader2.Width = 90;
+            this.columnHeader2.Width = 180;
             // 
             // columnHeader3
             // 
@@ -119,17 +124,17 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Start Time";
-            this.columnHeader4.Width = 150;
+            this.columnHeader4.Width = 75;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "End Time";
-            this.columnHeader5.Width = 150;
+            this.columnHeader5.Width = 75;
             // 
             // btnAdd
             // 
             this.btnAdd.Enabled = false;
-            this.btnAdd.Location = new System.Drawing.Point(597, 88);
+            this.btnAdd.Location = new System.Drawing.Point(467, 88);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(76, 23);
             this.btnAdd.TabIndex = 6;
@@ -139,23 +144,23 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Enabled = false;
-            this.btnEdit.Location = new System.Drawing.Point(597, 117);
+            this.btnEdit.Location = new System.Drawing.Point(467, 117);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(76, 23);
             this.btnEdit.TabIndex = 7;
             this.btnEdit.Text = "Edit...";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnRemove
             // 
-            this.btnRemove.Enabled = false;
-            this.btnRemove.Location = new System.Drawing.Point(597, 146);
+            this.btnRemove.Location = new System.Drawing.Point(467, 146);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(76, 25);
             this.btnRemove.TabIndex = 8;
             this.btnRemove.Text = "Remove...";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnUpload
             // 
@@ -174,7 +179,7 @@
             this.toolStripStatusUpload});
             this.statusStrip1.Location = new System.Drawing.Point(0, 411);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(692, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(552, 22);
             this.statusStrip1.TabIndex = 10;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -184,11 +189,15 @@
             this.toolStripStatusUpload.Size = new System.Drawing.Size(35, 17);
             this.toolStripStatusUpload.Text = "Idle...";
             // 
-            // Form1
+            // columnHeader6
+            // 
+            this.columnHeader6.Width = 0;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(692, 433);
+            this.ClientSize = new System.Drawing.Size(552, 433);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnUpload);
             this.Controls.Add(this.btnRemove);
@@ -200,7 +209,7 @@
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnOpenCSV);
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "MSCO Schedule Assistant";
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -227,6 +236,7 @@
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusUpload;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }
 

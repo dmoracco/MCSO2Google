@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Scheduler
+namespace MCSO.Scheduling.Forms
 {
 
-    public partial class Form3 : Form
+    public partial class CalendarSubForm : Form
     {
         public DateTime Time { get; set; }
         private DateTime _date;
 
-        public Form3()
+        public CalendarSubForm()
         {
             InitializeComponent();
       

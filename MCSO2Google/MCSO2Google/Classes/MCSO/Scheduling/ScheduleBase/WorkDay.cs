@@ -6,7 +6,7 @@ using System.Text;
 namespace MCSO.Scheduling.ScheduleBase
 {
     /// <summary>
-    /// Represents a collection of Shifts in a work day.
+    /// Handles collection of assigned work Shifts for a given date.
     /// </summary>
     public class WorkDay: CalendarBaseScheduleItem
 	{
@@ -25,8 +25,8 @@ namespace MCSO.Scheduling.ScheduleBase
         public WorkDay(Shift initialshift)
         {
             ShiftList = new List<Shift>();
-            AddShift(initialshift);
             Date = initialshift.Date;
+            AddShift(initialshift);            
             PartOfWeek = initialshift.PartOfWeek;
         }
 

@@ -5,7 +5,10 @@ using System.Text;
 
 namespace MCSO.Scheduling.ScheduleBase
 {
-	public class WorkWeek : CalendarBaseScheduleItem
+    /// <summary>
+    /// Handles the collection and sorting of WorkDays.
+    /// </summary>
+    public class WorkWeek : CalendarBaseScheduleItem
 	{
 		
         public List<WorkDay> WorkDayList { get; }
