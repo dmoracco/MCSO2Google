@@ -1,8 +1,10 @@
 using Google.Apis.Calendar.v3.Data;
 using MCSO.Scheduling.ScheduleBase.Data;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
+using MCSO.Scheduling.FileIO;
 
 namespace MCSO.Scheduling.ScheduleBase
 {
@@ -19,30 +21,6 @@ namespace MCSO.Scheduling.ScheduleBase
         /// Collection of WorkWeeks within Schedule time frame.
         /// </summary>
         public List<WorkWeek> WorkWeekList { get; }
-
-        public CSV.CSVFile CSVFile
-        {
-            get => default(CSV.CSVFile);
-            set
-            {
-            }
-        }
-
-        public Forms.MainForm MainForm
-        {
-            get => default(Forms.MainForm);
-            set
-            {
-            }
-        }
-
-        public CalendarShiftEntry CalendarShiftEntry
-        {
-            get => default(CalendarShiftEntry);
-            set
-            {
-            }
-        }
 
         private int _shift_control_number;
 
@@ -132,8 +110,38 @@ namespace MCSO.Scheduling.ScheduleBase
                     }
                 }
             }
+            
 
             return shiftlist;
+        }
+
+        public void StoreSchedule()
+        {
+            log.Info("Call for Schedule::ShiftList");
+            var shiftlist = new List<Shift>();
+
+            foreach (WorkWeek week in WorkWeekList)
+            {
+                foreach (WorkDay day in week.WorkDayList)
+                {
+                    foreach (Shift shift in day.ShiftList)
+                    {
+                        string name = GoogleCalendar.GetAccountEmail();
+                        int index = name.IndexOf("@");
+                        if (index > 0)
+                            name = name.Substring(0, index);
+                        name = name + ".json";
+
+                        string path = System.Environment.GetFolderPath(
+                        System.Environment.SpecialFolder.Personal);
+                        string dirpath = Path.Combine(path, "MCSO/Schedule/");
+                        string filepath = Path.Combine(dirpath, name);
+
+                        Directory.CreateDirectory(dirpath);
+                        ScheduleDataStore.WriteToJsonFile<Shift>(filepath, shift, true);
+                    }
+                }
+            }
         }
         /// <summary>
         /// Removes shift from collections. Removes collections if empty.

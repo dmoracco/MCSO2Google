@@ -27,7 +27,15 @@ namespace MCSO.Scheduling.ScheduleBase
             // Create new Shift element.
             try
             {
-                var newshift = new Shift(employee, starttime, endtime, shiftdesignation, controlnumber);
+                var newshift = new Shift()
+                {
+                    Employee = employee,
+                    StartDateTime = starttime,
+                    EndDateTime = endtime,
+                    ShiftDesignation = shiftdesignation,
+                    ControlNumber = controlnumber,
+                };
+
                 AddShift(newshift);
             }
             catch (Exception ex)
@@ -52,6 +60,7 @@ namespace MCSO.Scheduling.ScheduleBase
             catch (Exception ex)
             {
                 log.Debug("Error while creating new GoogleCalanderAPI", ex);
+                throw;
             }
         }
 

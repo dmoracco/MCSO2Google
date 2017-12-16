@@ -13,15 +13,15 @@ namespace MCSO.Scheduling.ScheduleBase.Data
         /// <summary>
         /// Designates shift corisponding to shift legend
         /// </summary>
-        public string ShiftDesignation { get; }
+        public string ShiftDesignation { get; set; }
         /// <summary>
         /// Starting Date and Time of shift
         /// </summary>
-        public DateTime StartDateTime { get; }
+        public DateTime StartDateTime { get; set; }
         /// <summary>
         /// Ending Date and Time of shift
         /// </summary>
-        public DateTime EndDateTime { get; }
+        public DateTime EndDateTime { get; set; }
         /// <summary>
         /// Starting Date of shift
         /// </summary>
@@ -32,7 +32,7 @@ namespace MCSO.Scheduling.ScheduleBase.Data
         /// <summary>
         /// Employee assigned to shift
         /// </summary>
-        public Employee Employee { get; }
+        public Employee Employee { get; set; }
         /// <summary>
         /// Returns the Date that begins the week (Sunday)
         /// </summary>
@@ -54,63 +54,39 @@ namespace MCSO.Scheduling.ScheduleBase.Data
                 }
             }
         }
-        public int ControlNumber { get; }
+        public int ControlNumber { get; set; }
 
-        public Schedule Schedule
+        public Shift()
         {
-            get => default(Schedule);
-            set
-            {
-            }
-        }
+            //log.Info("Creating new Shift");
+            //try
+            //{
 
-        public WorkWeek WorkWeek
-        {
-            get => default(WorkWeek);
-            set
-            {
-            }
-        }
+            //    // Set and validate Start and End Date/Times
+            //    StartDateTime = starttime;
+            //    if (DateTime.Compare(endtime, starttime) > 0 || shiftdesignation == "Vacation" )
+            //    {
+            //        if (shiftdesignation == "Vacation")
+            //        {
+            //            endtime = endtime.AddDays(1);
+            //        }
+            //        EndDateTime = endtime;
+            //    }
+            //    else
+            //    { 
+            //        throw new Exception("End Date/Time earlier than Start Date/Time");
+            //    }
 
-        public WorkDay WorkDay
-        {
-            get => default(WorkDay);
-            set
-            {
-            }
-        }
-
-        public Shift(Employee employee, DateTime starttime, DateTime endtime, string shiftdesignation, int controlnumber)
-        {
-            log.Info("Creating new Shift");
-            try
-            {
-
-                // Set and validate Start and End Date/Times
-                StartDateTime = starttime;
-                if (DateTime.Compare(endtime, starttime) > 0 || shiftdesignation == "Vacation" )
-                {
-                    if (shiftdesignation == "Vacation")
-                    {
-                        endtime = endtime.AddDays(1);
-                    }
-                    EndDateTime = endtime;
-                }
-                else
-                { 
-                    throw new Exception("End Date/Time earlier than Start Date/Time");
-                }
-
-                // Assign Employee and other variables
-                ShiftDesignation = shiftdesignation;
-                Employee = employee;
-                ControlNumber = controlnumber;
-            }
-            catch (Exception ex)
-            {
-                log.Debug("Error while validating data of new Shift", ex);
-                throw;
-            }
+            //    // Assign Employee and other variables
+            //    ShiftDesignation = shiftdesignation;
+            //    Employee = employee;
+            //    ControlNumber = controlnumber;
+            //}
+            //catch (Exception ex)
+            //{
+            //    log.Debug("Error while validating data of new Shift", ex);
+            //    throw;
+            //}
         }
 
         

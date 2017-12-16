@@ -1,4 +1,4 @@
-﻿using MCSO.Scheduling.CSV;
+﻿using MCSO.Scheduling.FileIO;
 using MCSO.Scheduling.ScheduleBase;
 using MCSO.Scheduling.ScheduleBase.Data;
 using System;
@@ -199,6 +199,11 @@ namespace MCSO.Scheduling.Forms
         private void listViewShifts_DoubleClick(object sender, EventArgs e)
         {
             btnEdit.PerformClick();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            _currentSchedule.StoreSchedule();
         }
     }
 }

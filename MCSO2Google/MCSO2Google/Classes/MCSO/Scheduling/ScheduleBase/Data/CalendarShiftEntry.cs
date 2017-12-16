@@ -26,14 +26,6 @@ namespace MCSO.Scheduling.ScheduleBase.Data
         /// </summary>
         public string SubCalendarID { get; set; }
 
-        public GoogleAPI.GoogleCalendarAPI GoogleCalendarAPI
-        {
-            get => default(GoogleAPI.GoogleCalendarAPI);
-            set
-            {
-            }
-        }
-
         public CalendarShiftEntry(Shift shift)
         {
             log.Info("Creating new CalendarShiftEntry");

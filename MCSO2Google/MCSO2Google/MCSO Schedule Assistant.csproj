@@ -86,9 +86,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\MCSO\Scheduling\FileIO\ScheduleDataStore.cs" />
     <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\CalendarBaseScheduleItem.cs" />
     <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\Data\CalendarShiftEntry.cs" />
-    <Compile Include="Classes\MCSO\Scheduling\CSV\CSVFile.cs" />
+    <Compile Include="Classes\MCSO\Scheduling\FileIO\CSVFile.cs" />
     <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\Data\Employee.cs" />
     <Compile Include="Classes\MCSO\Scheduling\GoogleAPI\GoogleCalendarAPI.cs" />
     <Compile Include="Classes\MCSO\Scheduling\ScheduleBase\Data\MCSOstatics.cs" />
@@ -135,9 +136,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="ClassDiagram.cd" />
-    <None Include="client_secret.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="client_secret.json" />
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -23,14 +23,6 @@ namespace MCSO.Scheduling.ScheduleBase.Data
         /// </summary>
         public string SubCalendarID { get; set; }
 
-        public CSV.CSVFile CSVFile
-        {
-            get => default(CSV.CSVFile);
-            set
-            {
-            }
-        }
-
         public Employee(string name, int id)
         {
             log.Info("Creating new Employee");

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace MCSO.Scheduling.CSV
+namespace MCSO.Scheduling.FileIO
 {
     
     /// <summary>
@@ -18,14 +18,6 @@ namespace MCSO.Scheduling.CSV
         /// List of string entries of CSV file parsed by lines
         /// </summary>
         public List<string> EntryList { get; }
-
-        public Forms.MainForm MainForm
-        {
-            get => default(Forms.MainForm);
-            set
-            {
-            }
-        }
 
         public CSVFile(string path)
         {

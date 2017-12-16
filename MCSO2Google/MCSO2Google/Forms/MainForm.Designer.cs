@@ -46,6 +46,7 @@
             this.btnUpload = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusUpload = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnSave = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -196,11 +197,22 @@
             this.toolStripStatusUpload.Size = new System.Drawing.Size(35, 17);
             this.toolStripStatusUpload.Text = "Idle...";
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(468, 317);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 11;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(552, 433);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnUpload);
             this.Controls.Add(this.btnRemove);
@@ -241,6 +253,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusUpload;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 
